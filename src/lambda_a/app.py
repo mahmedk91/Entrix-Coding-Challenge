@@ -3,9 +3,7 @@ import random
 
 def lambda_handler(event, context):
     """Generate event for results processing."""
-    response = {
-        "results": random.choice([True, False])
-    }
+    response = {"results": random.choice([True, False])}
     if response["results"]:
         response["orders"] = [
             {
@@ -15,6 +13,6 @@ def lambda_handler(event, context):
             {
                 "status": "rejected",
                 "power": 2,
-            }
+            },
         ]
     return response
