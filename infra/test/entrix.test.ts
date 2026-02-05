@@ -28,4 +28,22 @@ describe('EntrixStack', () => {
       }
     });
   });
+
+  test('Post Lambda Has DynamoDB Table Environment Variable', () => {
+    template.hasResourceProperties('AWS::Lambda::Function', {
+      FunctionName: 'post-lambda-test',
+      Runtime: 'python3.14',
+      Environment: {
+        Variables: {
+          TABLE_NAME: {}
+        }
+      }
+    });
+  });
+
+  test('API Gateway Created', () => {
+    template.hasResourceProperties('AWS::ApiGateway::RestApi', {
+      Name: 'orders-api-test'
+    });
+  });
 });
