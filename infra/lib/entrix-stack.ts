@@ -81,7 +81,7 @@ export class EntrixStack extends cdk.Stack {
     ordersResource.addMethod('POST', new apigateway.LambdaIntegration(postLambda));
 
     // lambda_a
-    const lambdaA = new lambda.Function(this, 'LambdaA', {
+    new lambda.Function(this, 'LambdaA', {
       functionName: `lambda-a-${props.environmentName}`,
       runtime: lambda.Runtime.PYTHON_3_14,
       handler: 'app.lambda_handler',
