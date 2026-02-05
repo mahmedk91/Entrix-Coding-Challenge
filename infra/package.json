@@ -10,6 +10,7 @@
     "test": "jest",
     "cdk": "cdk",
     "synth": "cdk synth",
+    "deploy": "cdk deploy --require-approval never --all",
     "lint": "eslint . --ext .ts"
   },
   "devDependencies": {
