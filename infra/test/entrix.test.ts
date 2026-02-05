@@ -7,7 +7,7 @@ describe('EntrixStack', () => {
   let stack: EntrixStack;
   let template: Template;
 
-  beforeEach(() => {
+  beforeAll(() => {
     app = new cdk.App();
     stack = new EntrixStack(app, 'TestStack', {
       environmentName: 'test',
@@ -44,6 +44,37 @@ describe('EntrixStack', () => {
   test('API Gateway Created', () => {
     template.hasResourceProperties('AWS::ApiGateway::RestApi', {
       Name: 'orders-api-test'
+    });
+  });
+
+  test('Lambda A Has Correct Environment Variables', () => {
+    template.hasResourceProperties('AWS::Lambda::Function', {
+      FunctionName: 'lambda-a-test',
+      Runtime: 'python3.14'
+    });
+  });
+
+  test('Lambda B Has S3 Bucket Environment Variable', () => {
+    template.hasResourceProperties('AWS::Lambda::Function', {
+      FunctionName: 'lambda-b-test',
+      Runtime: 'python3.14',
+      Environment: {
+        Variables: {
+          LOG_BUCKET: {}
+        }
+      }
+    });
+  });
+
+  test('S3 Bucket Created with Encryption', () => {
+    template.hasResourceProperties('AWS::S3::Bucket', {
+      BucketEncryption: {
+        ServerSideEncryptionConfiguration: [{
+          ServerSideEncryptionByDefault: {
+            SSEAlgorithm: 'AES256'
+          }
+        }]
+      }
     });
   });
 });
