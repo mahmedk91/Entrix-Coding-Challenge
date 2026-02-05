@@ -10,7 +10,7 @@ export class EntrixStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: EntrixStackProps) {
     super(scope, id, props);
 
-    const ordersTable = new dynamodb.Table(this, 'OrdersTable', {
+    new dynamodb.Table(this, 'OrdersTable', {
       tableName: `orders-table-${props.environmentName}`,
       partitionKey: {
         name: 'record_id',

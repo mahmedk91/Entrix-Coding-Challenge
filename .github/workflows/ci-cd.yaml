@@ -1,0 +1,44 @@
+name: Test and Lint CDK Stack
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test-and-lint:
+    name: Test and Lint CDK Stack
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: 'infra/package-lock.json'
+
+      - name: Install dependencies
+        run: |
+          cd infra && npm ci
+
+      - name: Build TypeScript
+        run: cd infra && npm run build
+
+      - name: Lint TypeScript
+        run: cd infra && npm run lint
+
+      - name: Run CDK tests
+        run: cd infra && npm test
+
+      - name: CDK Synth (validation)
+        run: cd infra && npm run synth
+        env:
+          CDK_DEFAULT_ACCOUNT: 123456789012
+          CDK_DEFAULT_REGION: eu-west-1
