@@ -2,7 +2,7 @@
   "name": "entrix",
   "version": "0.1.0",
   "bin": {
-    "entrix": "bin/entrix.js"
+    "entrix": "dist/bin/entrix.js"
   },
   "scripts": {
     "build": "tsc",
