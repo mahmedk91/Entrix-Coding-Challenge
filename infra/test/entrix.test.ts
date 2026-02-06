@@ -77,4 +77,22 @@ describe('EntrixStack', () => {
       }
     });
   });
+
+  test('SNS Topic Created', () => {
+    template.hasResourceProperties('AWS::SNS::Topic', {
+      TopicName: 'order-processing-notifications-test'
+    });
+  });
+
+  test('Step Functions State Machine Created', () => {
+    template.hasResourceProperties('AWS::StepFunctions::StateMachine', {
+      StateMachineName: 'order-processing-test'
+    });
+  });
+
+  test('EventBridge Rule Created', () => {
+    template.hasResourceProperties('AWS::Events::Rule', {
+      ScheduleExpression: 'rate(1 hour)'
+    });
+  });
 });
