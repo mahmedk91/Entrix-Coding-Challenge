@@ -12,6 +12,7 @@ import * as targets from 'aws-cdk-lib/aws-events-targets';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as path from 'path';
 import * as python from '@aws-cdk/aws-lambda-python-alpha';
+import { BundlingFileAccess } from 'aws-cdk-lib/core';
 
 export interface EntrixStackProps extends cdk.StackProps {
   environmentName: string;
@@ -111,6 +112,9 @@ export class EntrixStack extends cdk.Stack {
       functionName: `lambda-b-${props.environmentName}`,
       entry: path.join(__dirname, '../../src/lambda_b'),
       runtime: lambda.Runtime.PYTHON_3_14,
+      bundling: {
+        bundlingFileAccess: BundlingFileAccess.VOLUME_COPY,
+      },
       index: 'app.py',
       handler: 'lambda_handler',
       environment: {
